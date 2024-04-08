@@ -11,9 +11,29 @@ namespace GameDataParser
 
         public static string ReceiveUserInput()
         {
-            Console.WriteLine("Please enter the file name you want to read:");
-            string fileName = Console.ReadLine();
-            return fileName;
+            bool isFileRead = false;
+            do
+            {
+                try
+                {
+                    Console.WriteLine("Please enter the file name you want to read:");
+                    string fileName = Console.ReadLine();
+                    if (fileName != null && fileName !="")
+                    {
+                        isFileRead = true;
+                        return fileName;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Argument cannot be blank.");
+                    }
+                }
+                catch (ArgumentNullException ex)
+                {
+                    Console.WriteLine("The file name cannot be null.");
+                }
+            } while (!isFileRead);
+            return null;
         }
 
         public static void PrintGames(List<VideoGame> videoGames)
