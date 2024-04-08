@@ -11,6 +11,8 @@ namespace GameDataParser
     internal class JsonRepository
     {
         public string FileName { get; set; }
+        Logger logger = new Logger("logger.txt");
+        
         public JsonRepository(string fileName)
         {
             FileName = fileName;
@@ -28,6 +30,8 @@ namespace GameDataParser
             catch (FileNotFoundException ex)
             {
                 Console.WriteLine("File does not exist.");
+                Logger logger = new Logger("logger.txt");
+                logger.Log(ex);
                 userInput = UserInteraction.ReceiveUserInput();
                 JsonRepository jsonRepository = new JsonRepository(userInput);
                 videoGames = jsonRepository.ReadFile();
@@ -36,6 +40,7 @@ namespace GameDataParser
             catch (IOException ex)
             {
                 Console.WriteLine("File name must be valid.");
+                logger.Log(ex);
                 userInput = UserInteraction.ReceiveUserInput();
                 JsonRepository jsonRepository = new JsonRepository(userInput);
                 videoGames = jsonRepository.ReadFile();
@@ -50,6 +55,7 @@ namespace GameDataParser
                 Console.ForegroundColor = ConsoleColor.Red;
                 //Console.WriteLine($"{ex.Message} The Json file is in invalid format. The file is : {FileName}.");
                 Console.WriteLine($"The Json file is in invalid format. The file is : {FileName}.");
+                logger.Log(ex);
                 Console.ForegroundColor = originalForegroundColor;
                 userInput = UserInteraction.ReceiveUserInput();
                 JsonRepository jsonRepository = new JsonRepository(userInput);
@@ -58,7 +64,7 @@ namespace GameDataParser
             }
             if (videoGames.Count > 0) 
             { 
-            return videoGames;
+                return videoGames;
             }
             return null;
         }

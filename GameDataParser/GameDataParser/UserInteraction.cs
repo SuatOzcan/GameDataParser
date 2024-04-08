@@ -8,7 +8,7 @@ namespace GameDataParser
 {
     internal static class UserInteraction
     {
-
+        static Logger logger = new Logger("logger.txt");
         public static string ReceiveUserInput()
         {
             bool isFileRead = false;
@@ -31,6 +31,7 @@ namespace GameDataParser
                 catch (ArgumentNullException ex)
                 {
                     Console.WriteLine("The file name cannot be null.");
+                    logger.Log(ex);
                 }
             } while (!isFileRead);
             return null;

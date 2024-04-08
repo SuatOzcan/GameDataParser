@@ -6,17 +6,25 @@ namespace GameDataParser
     {
         static void Main(string[] args)
         {
-            try 
-            { 
-                string fileName = UserInteraction.ReceiveUserInput();
-                JsonRepository jsonRepository = new JsonRepository(fileName);
-                List<VideoGame> videoGames = jsonRepository.ReadFile();
-                UserInteraction.PrintGames(videoGames);
-            }
-            catch(Exception ex)
+            Logger logger;
+
+            try
             {
-                Console.WriteLine(ex.Message);
+                App();
             }
+            catch (Exception ex)
+            {
+                logger = new Logger("logger.txt");
+                logger.Log(ex);
+            }
+        }
+
+        private static void App()
+        {
+            string fileName = UserInteraction.ReceiveUserInput();
+            JsonRepository jsonRepository = new JsonRepository(fileName);
+            List<VideoGame> videoGames = jsonRepository.ReadFile();
+            UserInteraction.PrintGames(videoGames);
         }
     }
 }
